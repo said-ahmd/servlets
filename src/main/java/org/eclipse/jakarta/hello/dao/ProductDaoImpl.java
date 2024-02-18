@@ -17,18 +17,10 @@ public class ProductDaoImpl implements ProductDao{
     @Override
     public List<Product> getProducts() {
         List<Product> products = new ArrayList<>();
-        try {
-            entityTransaction.begin(); // Begin transaction before interacting with EntityManager
+           entityTransaction.begin(); // Begin transaction before interacting with EntityManager
             products = entityManager.createQuery("SELECT p FROM Product p", Product.class).getResultList();
             entityTransaction.commit();
-        } catch (Exception ex) {
-            if (entityTransaction.isActive()) {
-                entityTransaction.rollback();
-            }
-            ex.printStackTrace();
-        } finally {
-            entityManager.close();
-        }
+
         return products;
     }
 

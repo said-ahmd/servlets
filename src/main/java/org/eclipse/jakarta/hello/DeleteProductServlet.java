@@ -8,11 +8,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jakarta.hello.dao.ProductDao;
 import org.eclipse.jakarta.hello.dao.ProductDaoImpl;
+import org.eclipse.jakarta.hello.dao.ProductSingleton;
 
 import java.io.IOException;
 
 @WebServlet("/delete")
 public class DeleteProductServlet extends HttpServlet {
+    private ProductDao productDao;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,7 +27,8 @@ public class DeleteProductServlet extends HttpServlet {
         String id = request.getParameter("productId");
         int productId = Integer.parseInt(id);
 
-        ProductDao productDao = new ProductDaoImpl();
+        productDao = ProductSingleton.getInstance();
+
         productDao.deleteProduct(productId);
 
         response.sendRedirect("/products");

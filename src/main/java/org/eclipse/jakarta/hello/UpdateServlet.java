@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jakarta.hello.dao.ProductDao;
 import org.eclipse.jakarta.hello.dao.ProductDaoImpl;
+import org.eclipse.jakarta.hello.dao.ProductSingleton;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,8 +33,9 @@ public class UpdateServlet extends HttpServlet {
         Double newPrice = Double.parseDouble(price);
 
 
-        ProductDao productDao = new ProductDaoImpl();
+//        ProductDao productDao = new ProductDaoImpl();
 
+        ProductDao productDao = ProductSingleton.getInstance();
         productDao.updateProduct(productId,newName,newPrice);
 
         response.sendRedirect("/products");
